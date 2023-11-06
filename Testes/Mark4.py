@@ -3,9 +3,28 @@ from tkinter import filedialog
 import xlwings as xw
 import openpyxl
 import pandas as pd
+import customtkinter 
+import threading
+from PIL import Image
 from tkinter import font
 
 file_path = ""
+
+#-----------------------------
+
+def carregar_programa():
+    thread = threading.Thread(target=carregar_excel)
+    thread.start()
+
+def iniciar_programa():
+    thread = threading.Thread(target=rodar_programa)
+    thread.start()
+
+def salvar_programa():
+    thread = threading.Thread(target=salvar_excel)
+    thread.start()
+
+#-----------------------------
 
 def carregar_excel():
     global file_path
@@ -29,11 +48,11 @@ def rodar_programa():
         print("Nenhum Excel Carregado!")
         print("-" * 100)
         return
-
-    wb_xlwings = xw.Book(file_path)
-
+    
     status_label.config(text="Rodando o Programa")
-    root.update() 
+    janela.update() 
+
+    wb_xlwings = xw.Book(file_path) 
 
     valores_cliente=[]
     valores_xlwings = []
@@ -158,6 +177,32 @@ def salvar_excel():
         print("-" * 100)
         return
     
+    try:
+        if valores_cliente is None:
+            status_label.config(text="Programa não foi Rodado!")
+            print("Programa não foi Rodado!")
+            print("-" * 100)
+            print("teste")
+            return
+    except NameError:
+        status_label.config(text="Programa não foi Rodado!")
+        print("Programa não foi Rodado!")
+        print("-" * 100)
+        return
+
+    linha=72
+    while True:
+        dialog = customtkinter.CTkInputDialog(title="Caixa de dialogo", text="Digite a partir de qual linha seja inserirdo os dados:")
+        linha_text = dialog.get_input()
+
+        try:        
+            if linha_text is None:
+                break
+            linha = int(linha_text)
+            break  # Sai do loop se a conversão for bem-sucedida
+        except ValueError as e:
+            print("O valor não pode ser convertido para um número inteiro. Tente novamente.")
+    
     if file_path:
         status_label.config(text="Preparando para salvar o arquivo.")
 
@@ -178,8 +223,6 @@ def salvar_excel():
                 sheet['J20'] = numprojeto
                 sheet['C22'] = endeprojeto
                 sheet['J24'] = numos
-
-        linha = 72
 
         while len(valores_xlwings) > 0 and len(valores_workbook_openpyxl) > 0:
             if len(valores_xlwings) > 0:
@@ -225,28 +268,37 @@ def salvar_excel():
         print("Excel salvo com sucesso!")
         print("-" * 100)
 
-root = tk.Tk()
-root.title("SERVMAR")
+#-----------------------------
 
-root.minsize(250, 250)
+janela=customtkinter.CTk()
+janela.geometry("300x350")
+janela.title("SERVMAR")
+janela.resizable(width=False, height=False)
 
-corf = "#011246"
-corb = "#CD0232"
-cort = "#FE9B67"
+customtkinter.set_appearance_mode("light")
+customtkinter.set_default_color_theme("dark-blue")
 
-root.configure(bg=corf)
-fonte_negrito = font.Font(family="Helvetica", size=10, weight="bold")
+cabecalho= customtkinter.CTkLabel(janela, text="RELATÓRIO DE ENSAIO E AMOSTRAGEM",font=("arial bold", 14))
+cabecalho.pack()
 
-load_button = tk.Button(root, text="Carregar Excel", command=carregar_excel, bg=corb, font=fonte_negrito, fg=cort)
+load_button = customtkinter.CTkButton(janela, text="Carregar Excel", command=carregar_programa)
 load_button.pack(pady=20)
 
-load_button = tk.Button(root, text="Rodar Programa", command=rodar_programa, bg=corb, font=fonte_negrito, fg=cort)
-load_button.pack(pady=20)
+run_button = customtkinter.CTkButton(janela, text="Rodar Programa", command=iniciar_programa)
+run_button.pack(pady=20)
 
-save_button = tk.Button(root, text="Salvar Excel", command=salvar_excel, bg=corb, font=fonte_negrito, fg=cort)
+save_button = customtkinter.CTkButton(janela, text="Salvar Excel", command=salvar_programa)
 save_button.pack(pady=20)
 
-status_label = tk.Label(root, text="", background=corf, font=fonte_negrito, fg=cort)
-status_label.pack()
+status_label = tk.Label(janela, text="",bg="#ebebeb", font=("Arial", 15))
+status_label.pack(pady=5)
+fonte = font.nametofont("TkDefaultFont")
+fonte.configure(underline=True)
+fonte.configure(size=17)
+status_label.config(font=fonte)
 
-root.mainloop()
+img=customtkinter.CTkImage(light_image=Image.open("Testes/servmarlogo.png"), dark_image=Image.open("Testes/servmarlogo.png"), size=(345,50))
+
+customtkinter.CTkLabel(janela,text="", image=img).pack(pady=5)
+
+janela.mainloop()
