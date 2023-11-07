@@ -2,19 +2,18 @@ import customtkinter
 import tkinter as tk
 from tkinter import font
 from PIL import Image
-import subprocess
 import threading
 
-def chamar_mark4():
+def chamar():
     thread = threading.Thread(target=chamar_mark4)
     thread.start()
     status_label.config(text="")
 
-def chamar():
+def chamar_mark4():
     status_label.config(text="Abrindo Gerar Relatório")
-    subprocess.call(["python", "Testes/Mark4.py"])
+    import Mark4  # Importe o segundo programa como um módulo
+    Mark4.main()
     status_label.config(text="")
-
 
 janela=customtkinter.CTk()
 janela.geometry("345x180")
@@ -34,7 +33,6 @@ fonte = font.nametofont("TkDefaultFont")
 fonte.configure(underline=True)
 fonte.configure(size=17)
 status_label.config(font=fonte)
-
 
 img=customtkinter.CTkImage(light_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), dark_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), size=(345,50))
 customtkinter.CTkLabel(janela,text="", image=img).place(x=5, y=100)

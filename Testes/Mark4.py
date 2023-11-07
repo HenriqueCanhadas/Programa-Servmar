@@ -271,37 +271,46 @@ def salvar_excel():
 
 #-----------------------------
 
-janela=customtkinter.CTk()
-janela.geometry("300x350")
-janela.title("SERVMAR")
-janela.resizable(width=False, height=False)
 
-customtkinter.set_appearance_mode("light")
-customtkinter.set_default_color_theme("dark-blue")
+def main():
+    global status_label
+    global janela
+    
+    janela = customtkinter.CTkToplevel()
+    janela.geometry("300x350")
+    janela.title("SERVMAR")
+    janela.resizable(width=False, height=False)
+    
+    customtkinter.set_appearance_mode("light")
+    customtkinter.set_default_color_theme("dark-blue")
+    
+    # Forneça o caminho para o ícone com caracteres de barra invertida escapados
+    icone_path = r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarico.ico'
+    janela.iconbitmap(icone_path)
 
-janela.iconbitmap(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarico.ico')
+    cabecalho= customtkinter.CTkLabel(janela, text="RELATÓRIO DE ENSAIO E AMOSTRAGEM",font=("arial bold", 14))
+    cabecalho.pack()
 
-cabecalho= customtkinter.CTkLabel(janela, text="RELATÓRIO DE ENSAIO E AMOSTRAGEM",font=("arial bold", 14))
-cabecalho.pack()
+    load_button = customtkinter.CTkButton(janela, text="Carregar Excel", command=carregar_programa)
+    load_button.pack(pady=20)
 
-load_button = customtkinter.CTkButton(janela, text="Carregar Excel", command=carregar_programa)
-load_button.pack(pady=20)
+    run_button = customtkinter.CTkButton(janela, text="Rodar Programa", command=iniciar_programa)
+    run_button.pack(pady=20)
 
-run_button = customtkinter.CTkButton(janela, text="Rodar Programa", command=iniciar_programa)
-run_button.pack(pady=20)
+    save_button = customtkinter.CTkButton(janela, text="Salvar Excel", command=salvar_programa)
+    save_button.pack(pady=20)
 
-save_button = customtkinter.CTkButton(janela, text="Salvar Excel", command=salvar_programa)
-save_button.pack(pady=20)
+    status_label = tk.Label(janela, text="",bg="#ebebeb", font=("Arial", 15))
+    status_label.pack(pady=5)
+    fonte = font.nametofont("TkDefaultFont")
+    fonte.configure(underline=True)
+    fonte.configure(size=17)
+    status_label.config(font=fonte)
 
-status_label = tk.Label(janela, text="",bg="#ebebeb", font=("Arial", 15))
-status_label.pack(pady=5)
-fonte = font.nametofont("TkDefaultFont")
-fonte.configure(underline=True)
-fonte.configure(size=17)
-status_label.config(font=fonte)
+    img=customtkinter.CTkImage(light_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), dark_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), size=(345,50))
 
-img=customtkinter.CTkImage(light_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), dark_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), size=(345,50))
+    customtkinter.CTkLabel(janela,text="", image=img).pack(pady=5)
 
-customtkinter.CTkLabel(janela,text="", image=img).pack(pady=5)
+    janela.mainloop()
 
-janela.mainloop()
+main()
