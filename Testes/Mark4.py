@@ -192,6 +192,7 @@ def salvar_excel():
 
     linha=72
     while True:
+        janela.iconbitmap(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarico.ico')
         dialog = customtkinter.CTkInputDialog(title="Caixa de dialogo", text="Digite a partir de qual linha seja inserirdo os dados:")
         linha_text = dialog.get_input()
 
@@ -278,6 +279,8 @@ janela.resizable(width=False, height=False)
 customtkinter.set_appearance_mode("light")
 customtkinter.set_default_color_theme("dark-blue")
 
+janela.iconbitmap(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarico.ico')
+
 cabecalho= customtkinter.CTkLabel(janela, text="RELATÓRIO DE ENSAIO E AMOSTRAGEM",font=("arial bold", 14))
 cabecalho.pack()
 
@@ -297,7 +300,7 @@ fonte.configure(underline=True)
 fonte.configure(size=17)
 status_label.config(font=fonte)
 
-img=customtkinter.CTkImage(light_image=Image.open("Testes/servmarlogo.png"), dark_image=Image.open("Testes/servmarlogo.png"), size=(345,50))
+img=customtkinter.CTkImage(light_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), dark_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), size=(345,50))
 
 customtkinter.CTkLabel(janela,text="", image=img).pack(pady=5)
 
