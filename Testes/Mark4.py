@@ -7,20 +7,24 @@ import customtkinter
 import threading
 from PIL import Image
 from tkinter import font
+import os
 
 file_path = ""
 
 #-----------------------------
 
 def carregar_programa():
+    janela.iconbitmap(icone_path)
     thread = threading.Thread(target=carregar_excel)
     thread.start()
 
 def iniciar_programa():
+    janela.iconbitmap(icone_path)
     thread = threading.Thread(target=rodar_programa)
     thread.start()
 
 def salvar_programa():
+    janela.iconbitmap(icone_path)
     thread = threading.Thread(target=salvar_excel)
     thread.start()
 
@@ -192,7 +196,6 @@ def salvar_excel():
 
     linha=72
     while True:
-        janela.iconbitmap(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarico.ico')
         dialog = customtkinter.CTkInputDialog(title="Caixa de dialogo", text="Digite a partir de qual linha seja inserirdo os dados:")
         linha_text = dialog.get_input()
 
@@ -273,13 +276,20 @@ def salvar_excel():
 
 def imagem():
   global janela
-  img=customtkinter.CTkImage(light_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), size=(345,50))
 
+  imagem_path = os.path.join(script_dir, "servmarlogo.png")
+  img = customtkinter.CTkImage(light_image=Image.open(imagem_path), size=(345, 50))
   customtkinter.CTkButton(janela,text="",state="disable",fg_color="transparent",image=img).pack(pady=5)
- 
+    
 def main():
     global status_label
     global janela
+    global icone_path
+    global script_dir
+
+    # Obtém o diretório atual do script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    icone_path = os.path.join(script_dir, "servmarico.ico")
     #Caso For rodar separado alterar para janela = customtkinter.CTk()
     janela = customtkinter.CTkToplevel()
     janela.geometry("300x350")
@@ -288,10 +298,6 @@ def main():
     
     customtkinter.set_appearance_mode("light")
     customtkinter.set_default_color_theme("dark-blue")
-    
-    # Forneça o caminho para o ícone com caracteres de barra invertida escapados
-    icone_path = r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarico.ico'
-    janela.iconbitmap(icone_path)
 
     cabecalho= customtkinter.CTkLabel(janela, text="RELATÓRIO DE ENSAIO E AMOSTRAGEM",font=("arial bold", 14))
     cabecalho.pack()
@@ -305,7 +311,7 @@ def main():
     save_button = customtkinter.CTkButton(janela, text="Salvar Excel", command=salvar_programa)
     save_button.pack(pady=20)
 
-    status_label = tk.Label(janela, text="",bg="#ebebeb", font=("Arial", 15))
+    status_label = tk.Label(janela, text="",bg="#f2f2f2", font=("Arial", 15))
     status_label.pack(pady=5)
     fonte = font.nametofont("TkDefaultFont")
     fonte.configure(underline=True)
@@ -313,8 +319,6 @@ def main():
     status_label.config(font=fonte)
 
     imagem()
-
-    janela.mainloop()
 
 if __name__ == "__main__":
     main()

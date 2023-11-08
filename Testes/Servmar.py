@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import font
 from PIL import Image
 import threading
+import os
 
 def relatorio():
     thread = threading.Thread(target=rodar_relatorio)
@@ -19,26 +20,45 @@ def rodar_relatorio():
 def analise():
     status_label.config(text="Programa em Desenvolvimento")
 
-janelaprincipal=customtkinter.CTk()
+def resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller."""
+    try:
+        # PyInstaller creates a temporary directory to store resources.
+        # Use sys._MEIPASS to get the path to that directory.
+        base_path = sys._MEIPASS
+    except AttributeError:
+        # If not running in a PyInstaller bundle, use the standard path.
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+# Obtém o diretório atual do script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+janelaprincipal = customtkinter.CTk()
 janelaprincipal.geometry("345x180")
 janelaprincipal.title("SERVMAR")
 janelaprincipal.resizable(width=False, height=False)
 customtkinter.set_appearance_mode("light")
 customtkinter.set_default_color_theme("dark-blue")
 
-janelaprincipal.iconbitmap(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarico.ico')
+# Usa caminhos relativos para o ícone
+icone_path = os.path.join(script_dir, "servmarico.ico")
+janelaprincipal.iconbitmap(icone_path)
 
-gerar=customtkinter.CTkButton(janelaprincipal, text="Gerar Relatório", command=relatorio).place(x=15, y=10)
-teste=customtkinter.CTkButton(janelaprincipal, text="Gerar Analise", command=analise).place(x=190, y=10)
+gerar = customtkinter.CTkButton(janelaprincipal, text="Gerar Relatório", command=relatorio).place(x=15, y=10)
+teste = customtkinter.CTkButton(janelaprincipal, text="Gerar Análise", command=analise).place(x=190, y=10)
 
-status_label = tk.Label(janelaprincipal, text="",bg="#ebebeb", font=("Arial", 15))
-status_label.pack(pady=90)
+status_label = tk.Label(janelaprincipal, text="", bg="#ebebeb", font=("Arial", 15))
+status_label.pack(pady=85)
 fonte = font.nametofont("TkDefaultFont")
 fonte.configure(underline=True)
 fonte.configure(size=17)
 status_label.config(font=fonte)
 
-img=customtkinter.CTkImage(light_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), size=(345,50))
-imagem=customtkinter.CTkLabel(janelaprincipal,text="", image=img).place(x=5, y=100)
+# Usa caminhos relativos para a imagem
+imagem_path = os.path.join(script_dir, "servmarlogo.png")
+img = customtkinter.CTkImage(light_image=Image.open(imagem_path), size=(345, 50))
+imagem = customtkinter.CTkLabel(janelaprincipal, text="", image=img).place(x=5, y=100)
 
 janelaprincipal.mainloop()
