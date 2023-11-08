@@ -271,11 +271,16 @@ def salvar_excel():
 
 #-----------------------------
 
+def imagem():
+  global janela
+  img=customtkinter.CTkImage(light_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), size=(345,50))
 
+  customtkinter.CTkButton(janela,text="",state="disable",fg_color="transparent",image=img).pack(pady=5)
+ 
 def main():
     global status_label
     global janela
-    
+    #Caso For rodar separado alterar para janela = customtkinter.CTk()
     janela = customtkinter.CTkToplevel()
     janela.geometry("300x350")
     janela.title("SERVMAR")
@@ -307,10 +312,9 @@ def main():
     fonte.configure(size=17)
     status_label.config(font=fonte)
 
-    img=customtkinter.CTkImage(light_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), dark_image=Image.open(r'C:\Users\henrique.canhadas\OneDrive - Servmar Ambientais\Documentos\Codigos\GitHub\Programa Servmar\Testes\servmarlogo.png'), size=(345,50))
-
-    customtkinter.CTkLabel(janela,text="", image=img).pack(pady=5)
+    imagem()
 
     janela.mainloop()
 
-main()
+if __name__ == "__main__":
+    main()
