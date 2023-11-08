@@ -20,18 +20,6 @@ def rodar_relatorio():
 def analise():
     status_label.config(text="Programa em Desenvolvimento")
 
-def resource_path(relative_path):
-    """Get absolute path to resource, works for dev and for PyInstaller."""
-    try:
-        # PyInstaller creates a temporary directory to store resources.
-        # Use sys._MEIPASS to get the path to that directory.
-        base_path = sys._MEIPASS
-    except AttributeError:
-        # If not running in a PyInstaller bundle, use the standard path.
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
 # Obtém o diretório atual do script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
