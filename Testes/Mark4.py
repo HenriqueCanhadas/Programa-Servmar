@@ -36,7 +36,7 @@ def carregar_excel():
     if file_path:
         global dataframe
         dataframe = pd.read_excel(file_path)
-        status_label.config(text="Arquivo Excel Carregado.")
+        status_label.config(text="Arquivo Excel Carregado.", foreground="black")
         print("Arquivo Excel Carregado.")
         print("-" * 100)
 
@@ -48,12 +48,12 @@ def rodar_programa():
     global valores_cliente
 
     if file_path == "":
-        status_label.config(text="Nenhum Excel Carregado!")
+        status_label.config(text="Nenhum Excel Carregado!", foreground="red")
         print("Nenhum Excel Carregado!")
         print("-" * 100)
         return
     
-    status_label.config(text="Rodando o Programa")
+    status_label.config(text="Rodando o Programa", foreground="black")
     janela.update() 
 
     wb_xlwings = xw.Book(file_path) 
@@ -161,7 +161,7 @@ def rodar_programa():
 
         print("-" * 100) 
 
-    status_label.config(text="Todos os dados foram Armazenados")
+    status_label.config(text="Todos os dados foram Armazenados", foreground="black")
 
     print('Todos os dados foram Armazenados')
 
@@ -176,20 +176,20 @@ def salvar_excel():
     global status_label
 
     if file_path == "":
-        status_label.config(text="Nenhum Excel Carregado!")
+        status_label.config(text="Nenhum Excel Carregado!", foreground="red")
         print("Nenhum Excel Carregado!")
         print("-" * 100)
         return
     
     try:
         if valores_cliente is None:
-            status_label.config(text="Programa não foi Rodado!")
+            status_label.config(text="Programa não foi Rodado!", foreground="red")
             print("Programa não foi Rodado!")
             print("-" * 100)
             print("teste")
             return
     except NameError:
-        status_label.config(text="Programa não foi Rodado!")
+        status_label.config(text="Programa não foi Rodado!", foreground="red")
         print("Programa não foi Rodado!")
         print("-" * 100)
         return
@@ -267,7 +267,7 @@ def salvar_excel():
     save_path = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Arquivos Excel", "*.xlsx *.xls")])
     if save_path:
         workbook_openpyxl.save(save_path)
-        status_label.config(text="Excel salvo com sucesso!")
+        status_label.config(text="Excel salvo com sucesso!", foreground="black")
 
         print("Excel salvo com sucesso!")
         print("-" * 100)
@@ -292,14 +292,14 @@ def main():
     icone_path = os.path.join(script_dir, "servmarico.ico")
     #Caso For rodar separado alterar para janela = customtkinter.CTk()
     janela = customtkinter.CTkToplevel()
-    janela.geometry("300x350")
+    janela.geometry("335x350")
     janela.title("SERVMAR")
     janela.resizable(width=False, height=False)
     
     customtkinter.set_appearance_mode("light")
     customtkinter.set_default_color_theme("dark-blue")
 
-    cabecalho= customtkinter.CTkLabel(janela, text="RELATÓRIO DE ENSAIO E AMOSTRAGEM",font=("arial bold", 14))
+    cabecalho= customtkinter.CTkLabel(janela, text="RELATÓRIO DE ENSAIO E AMOSTRAGEM",font=("arial bold", 16),text_color="#0000ff")
     cabecalho.pack()
 
     load_button = customtkinter.CTkButton(janela, text="Carregar Excel", command=carregar_programa)
@@ -315,7 +315,7 @@ def main():
     status_label.pack(pady=5)
     fonte = font.nametofont("TkDefaultFont")
     fonte.configure(underline=True)
-    fonte.configure(size=17)
+    fonte.configure(size=15)
     status_label.config(font=fonte)
 
     imagem()

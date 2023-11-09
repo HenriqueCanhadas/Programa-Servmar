@@ -8,7 +8,7 @@ a = Analysis(
     ['Servmar.py'],
     pathex=[],
     binaries=[],
-    datas=[('servmarico.ico', '.'), ('servmarlogo.png', '.')],
+    datas=[('servmarlogo.png', '.'), ('servmarico.ico', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

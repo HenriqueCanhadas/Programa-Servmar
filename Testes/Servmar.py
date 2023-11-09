@@ -24,11 +24,12 @@ def analise():
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 janelaprincipal = customtkinter.CTk()
-janelaprincipal.geometry("345x180")
+janelaprincipal.geometry("345x200")
 janelaprincipal.title("SERVMAR")
 janelaprincipal.resizable(width=False, height=False)
 customtkinter.set_appearance_mode("light")
 customtkinter.set_default_color_theme("dark-blue")
+
 
 # Usa caminhos relativos para o ícone
 icone_path = os.path.join(script_dir, "servmarico.ico")
@@ -47,6 +48,6 @@ status_label.config(font=fonte)
 # Usa caminhos relativos para a imagem
 imagem_path = os.path.join(script_dir, "servmarlogo.png")
 img = customtkinter.CTkImage(light_image=Image.open(imagem_path), size=(345, 50))
-imagem = customtkinter.CTkLabel(janelaprincipal, text="", image=img).place(x=5, y=100)
+imagem = customtkinter.CTkLabel(janelaprincipal, text="", image=img).place(x=5, y=120)
 
 janelaprincipal.mainloop()
